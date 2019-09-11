@@ -1,3 +1,12 @@
+#![cfg_attr(all(feature = "mesalock_sgx",
+                not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+use std::prelude::v1::*;
+
 extern crate num;
 #[cfg(test)] extern crate rand;
 
@@ -12,9 +21,9 @@ const BTC_ALPHA: &'static[u8] = b"123456789\
                                   ABCDEFGHJKLMNPQRSTUVWXYZ\
                                   abcdefghijkmnopqrstuvwxyz";
 
-const FLICKR_ALPHA: &'static[u8] = b"123456789\
-                                     abcdefghijkmnopqrstuvwxyz\
-                                     ABCDEFGHJKLMNPQRSTUVWXYZ";
+//const FLICKR_ALPHA: &'static[u8] = b"123456789\
+//                                     abcdefghijkmnopqrstuvwxyz\
+//                                     ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 /// A trait for converting base58-encoded values
 pub trait FromBase58 {
